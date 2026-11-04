@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { SiGoogleplay, SiAppstore } from "react-icons/si";
 import {
   ArrowDownRight,
-  ArrowUpRight,
-  Download,
   ArrowRight,
+  ArrowUpRight,
   BriefcaseBusiness,
   Check,
   Code2,
@@ -21,11 +19,23 @@ import {
   Sun,
   X,
   Zap,
-  Mail,
-  Phone,
-  MessageCircle,
 } from "lucide-react";
+import Link from "next/link";
+import {
+  Building2,
+  Home,
+  FileSignature,
+  Layers,
+  Database,
+  Users,
+  CalendarDays,
+  AudioLines,
+  Activity,
+  ChartNoAxesCombined,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { projects, skills } from "@/data/portfolio";
+import { main } from "motion/react-client";
 
 const navItems = ["Home", "About", "Projects", "Skills", "Contact"];
 
@@ -33,9 +43,7 @@ export function PortfolioHome() {
   const [active, setActive] = useState("Home");
   const [dark, setDark] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<
-    (typeof projects)[number] | null
-  >(null);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   const goTo = (item: string) => {
     setActive(item);
@@ -46,7 +54,18 @@ export function PortfolioHome() {
   };
 
   const theme = dark ? "theme-dark" : "theme-light";
-
+  const projectVisuals: Record<string, LucideIcon> = {
+    building: Building2,
+    home: Home,
+    "file-signature": FileSignature,
+    layers: Layers,
+    database: Database,
+    users: Users,
+    calendar: CalendarDays,
+    audio: AudioLines,
+    activity: Activity,
+    chart: ChartNoAxesCombined,
+  };
   return (
     <main className={`portfolio-shell ${theme}`}>
       <div className="ambient ambient-one" />
@@ -72,6 +91,15 @@ export function PortfolioHome() {
           ))}
         </nav>
         <div className="top-actions">
+          <Link
+            className="studio-switch"
+            href="/studio"
+            aria-label="Explore Raza Studios"
+          >
+            <span className="studio-switch-mark">RS.</span>
+            <span>RAZA STUDIOS</span>
+            <ArrowUpRight size={13} />
+          </Link>
           <button
             className="icon-button theme-toggle"
             aria-label="Toggle theme"
@@ -79,7 +107,7 @@ export function PortfolioHome() {
           >
             {dark ? <Sun size={17} /> : <Moon size={17} />}
           </button>
-          <a className="top-contact" href="mailto:mehdiraza019mr@gmail.com">
+          <a className="top-contact" href="mailto:hello@mehindiraza.dev">
             Let&apos;s talk <ArrowUpRight size={15} />
           </a>
           <button
@@ -117,7 +145,7 @@ export function PortfolioHome() {
           <span className="rail-vertical">DESIGNING · BUILDING · SHIPPING</span>
           <div className="rail-socials">
             <a
-              href="https://github.com/"
+              href="https://github.com/Raza-003"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
@@ -125,7 +153,7 @@ export function PortfolioHome() {
               <Github size={17} />
             </a>
             <a
-              href="https://www.linkedin.com/"
+              href="https://www.linkedin.com/in/mehndi-raza/"
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
@@ -173,16 +201,15 @@ export function PortfolioHome() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
               >
-                <a
+                <button
                   className="primary-button"
-                  href="/Mehndi_Raza_Resume.pdf"
-                  download="Mehndi_Raza_Resume.pdf"
+                  onClick={() => goTo("Projects")}
                 >
-                  Download Resume <Download size={17} />
-                </a>
+                  Explore my work <ArrowUpRight size={17} />
+                </button>
                 <a
                   className="secondary-button"
-                  href="mailto:mehdiraza019mr@gmail.com"
+                  href="mailto:hello@mehindiraza.dev"
                 >
                   Get in touch <ArrowRight size={16} />
                 </a>
@@ -324,8 +351,8 @@ export function PortfolioHome() {
           <section className="stats-strip" aria-label="Experience highlights">
             {[
               { value: "3+", label: "YEARS IN DEVELOPMENT" },
-              { value: "3+", label: "PRODUCTION APPS" },
-              { value: "25+", label: "API INTEGRATIONS" },
+              { value: "3", label: "PRODUCTION APPS" },
+              { value: "20+", label: "API INTEGRATIONS" },
               { value: "10+", label: "APP MODULES" },
             ].map((item, i) => (
               <motion.div
@@ -343,367 +370,101 @@ export function PortfolioHome() {
           </section>
 
           <section
+            className="studio-promo section-block"
+            aria-labelledby="studio-promo-title"
+          >
+            <div className="studio-promo-copy">
+              <span className="section-kicker">A NEW WAY TO WORK TOGETHER</span>
+              <h2 id="studio-promo-title">
+                Have an idea?
+                <br />
+                <span className="gradient-text">Let&apos;s build it.</span>
+              </h2>
+              <p>
+                Through Raza Studios, I help individuals, startups and
+                businesses turn ideas into useful mobile apps, websites and
+                digital products.
+              </p>
+              <Link className="primary-button" href="/studio">
+                Explore Raza Studios <ArrowUpRight size={16} />
+              </Link>
+            </div>
+            <div className="studio-promo-aside" aria-hidden="true">
+              <div className="studio-promo-orbit studio-promo-orbit-one" />
+              <div className="studio-promo-orbit studio-promo-orbit-two" />
+              <div className="studio-promo-monogram">
+                RS<span>.</span>
+              </div>
+              <span className="studio-promo-caption">
+                IDEA → DESIGN → DEVELOPMENT
+              </span>
+            </div>
+          </section>
+
+          <section
             id="about"
             className="about-section section-anchor section-block"
           >
-            {/* Section heading */}
             <div className="section-heading">
               <div>
                 <span className="section-kicker">
                   01 / THE PERSON BEHIND THE CODE
                 </span>
-
                 <h2>
-                  Building apps.
+                  More than just
                   <br />
-                  <span className="muted-heading">Solving real problems.</span>
+                  <span className="muted-heading">writing widgets.</span>
                 </h2>
               </div>
-
               <span className="section-index">ABOUT</span>
             </div>
-
-            {/* Introduction */}
-            <div className="about-intro">
+            <div className="about-grid">
               <div className="about-text">
                 <p className="lead-text">
-                  I turn ideas into
+                  I enjoy the space where{" "}
                   <span className="inline-blue">
-                    {" "}
-                    reliable digital experiences.
+                    engineering meets experience.
                   </span>
                 </p>
-
                 <p>
-                  I&apos;m Mehndi Raza, a Flutter Developer with 3+ years of
-                  overall software development experience, specializing in
-                  cross-platform mobile applications for Android and iOS.
+                  I&apos;m a self-driven Flutter Developer with 3+ years of
+                  overall development experience and hands-on experience
+                  building cross-platform mobile applications. I work across the
+                  development lifecycle — from shaping interfaces and
+                  integrating APIs to handling state, debugging and delivering
+                  production features.
                 </p>
-
                 <p>
-                  My experience spans the complete development lifecycle — from
-                  building responsive interfaces and designing application
-                  architecture to integrating REST APIs, implementing enterprise
-                  workflows, debugging production issues and managing app
-                  releases.
+                  I care about maintainable code, practical architecture and the
+                  small details that make an application feel polished.
                 </p>
-
-                <p>
-                  I&apos;ve worked on employee applications, ERP systems, CRM
-                  solutions and independent mobile products, with a strong focus
-                  on maintainable code, reusable components and practical
-                  problem-solving.
-                </p>
-
                 <button className="text-link" onClick={() => goTo("Projects")}>
-                  Explore my projects <ArrowDownRight size={17} />
+                  See what I&apos;ve built <ArrowDownRight size={17} />
                 </button>
               </div>
-
-              {/* Professional highlights */}
               <div className="about-cards">
                 <div className="principle-card">
                   <span className="principle-icon">
                     <Code2 size={19} />
                   </span>
-
-                  <b>Mobile Engineering</b>
-
+                  <b>Engineering mindset</b>
                   <p>
-                    Flutter, Dart, MVVM, Provider, Riverpod and Clean
-                    Architecture.
+                    Structured code, reusable components and thoughtful
+                    architecture.
                   </p>
-
                   <span className="card-number">01</span>
                 </div>
-
                 <div className="principle-card">
                   <span className="principle-icon">
-                    <BriefcaseBusiness size={19} />
+                    <Sparkles size={19} />
                   </span>
-
-                  <b>Enterprise Solutions</b>
-
+                  <b>Detail obsessed</b>
                   <p>
-                    ERPNext integration, business workflows, APIs and production
-                    apps.
+                    Interfaces should feel intuitive, responsive and
+                    intentional.
                   </p>
-
                   <span className="card-number">02</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Experience timeline */}
-            <div className="experience-section">
-              <div className="experience-heading">
-                <div>
-                  <span className="section-kicker">PROFESSIONAL JOURNEY</span>
-
-                  <h3>
-                    My work
-                    <span className="muted-heading"> experience.</span>
-                  </h3>
-                </div>
-
-                <span className="experience-count">03 POSITIONS</span>
-              </div>
-
-              <div className="experience-timeline">
-                {/* CubeZix Technologies */}
-                <article className="experience-card">
-                  <div className="experience-marker">
-                    <BriefcaseBusiness size={17} />
-                  </div>
-
-                  <div className="experience-content">
-                    <div className="experience-top">
-                      <div>
-                        <span className="experience-period">
-                          JAN 2025 — PRESENT
-                        </span>
-
-                        <h4>
-                          Flutter Developer / Mobile Application Developer
-                        </h4>
-
-                        <p className="experience-company">
-                          CubeZix Technologies · Mumbai, India
-                        </p>
-                      </div>
-
-                      <span className="experience-badge fulltime-badge">
-                        Full-time
-                      </span>
-                    </div>
-
-                    <p className="experience-summary">
-                      Independently developing and maintaining production
-                      Flutter applications for Android and iOS, with ownership
-                      of feature development, API integrations, debugging and
-                      release activities.
-                    </p>
-
-                    <div className="experience-achievements">
-                      <div>
-                        <strong>3</strong>
-                        <span>Production apps</span>
-                      </div>
-
-                      <div>
-                        <strong>50+</strong>
-                        <span>App users</span>
-                      </div>
-
-                      <div>
-                        <strong>20+</strong>
-                        <span>API integrations</span>
-                      </div>
-                    </div>
-
-                    <ul className="experience-points">
-                      <li>
-                        Develop and maintain CubeZixOne, an employee application
-                        serving 50+ users across 10+ business modules.
-                      </li>
-
-                      <li>
-                        Implement enterprise workflows covering leave
-                        applications, expense claims, procurement requisitions,
-                        purchase orders, payment entries, salary certificates
-                        and document approvals.
-                      </li>
-
-                      <li>
-                        Build role-based approval workflows, workflow
-                        transitions, approver-specific actions and
-                        digital-signature functionality.
-                      </li>
-
-                      <li>
-                        Integrate ERPNext/Frappe REST APIs, Firebase
-                        Authentication, Firestore, FCM and Crashlytics.
-                      </li>
-
-                      <li>
-                        Implement PDF/image rendering, attachment handling,
-                        notifications, background functionality and reusable UI.
-                      </li>
-
-                      <li>
-                        Apply Provider, Riverpod, MVVM, Clean Architecture and
-                        Repository Pattern; troubleshoot production, Android and
-                        iOS build and deployment issues.
-                      </li>
-
-                      <li>
-                        Contribute to TSI, CubeZix Common ERP and Knowledge Fund
-                        CRM.
-                      </li>
-                    </ul>
-
-                    <div className="experience-tech">
-                      {[
-                        "Flutter",
-                        "Dart",
-                        "ERPNext",
-                        "REST APIs",
-                        "Firebase",
-                        "Provider",
-                        "Riverpod",
-                        "MVVM",
-                      ].map((item) => (
-                        <span key={item}>{item}</span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-
-                {/* Cubosquare Flutter Developer */}
-                <article className="experience-card">
-                  <div className="experience-marker">
-                    <BriefcaseBusiness size={17} />
-                  </div>
-
-                  <div className="experience-content">
-                    <div className="experience-top">
-                      <div>
-                        <span className="experience-period">
-                          DEC 2023 — DEC 2024
-                        </span>
-
-                        <h4>Flutter & Mobile Developer</h4>
-
-                        <p className="experience-company">
-                          Cubosquare Technology · Mumbai, India
-                        </p>
-                      </div>
-
-                      <span className="experience-badge fulltime-badge">
-                        Full-time
-                      </span>
-                    </div>
-
-                    <p className="experience-summary">
-                      Developed cross-platform mobile applications and
-                      implemented backend integrations and third-party services
-                      to deliver functional Android and iOS application
-                      features.
-                    </p>
-
-                    <ul className="experience-points">
-                      <li>
-                        Developed responsive mobile application features using
-                        Flutter and Dart.
-                      </li>
-
-                      <li>
-                        Integrated REST APIs and JSON-based backend services.
-                      </li>
-
-                      <li>
-                        Implemented Firebase Authentication, Firebase Cloud
-                        Messaging and Google Sign-In.
-                      </li>
-
-                      <li>
-                        Integrated Cloudinary for image upload and retrieval,
-                        along with file handling functionality.
-                      </li>
-
-                      <li>
-                        Built reusable UI components and performed debugging,
-                        API validation and functional testing.
-                      </li>
-
-                      <li>
-                        Contributed to React.js, Next.js and React Native
-                        projects.
-                      </li>
-                    </ul>
-
-                    <div className="experience-tech">
-                      {[
-                        "Flutter",
-                        "Dart",
-                        "REST APIs",
-                        "Firebase",
-                        "Cloudinary",
-                        "Google Sign-In",
-                        "React",
-                        "Next.js",
-                      ].map((item) => (
-                        <span key={item}>{item}</span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-
-                {/* Internship */}
-                <article className="experience-card">
-                  <div className="experience-marker">
-                    <Code2 size={17} />
-                  </div>
-
-                  <div className="experience-content">
-                    <div className="experience-top">
-                      <div>
-                        <span className="experience-period">
-                          MAY 2023 — NOV 2023
-                        </span>
-
-                        <h4>Flutter / Web Development Intern</h4>
-
-                        <p className="experience-company">
-                          Cubosquare Technology · Mumbai, India
-                        </p>
-                      </div>
-                      <span className="experience-badge internship-badge">
-                        Internship
-                      </span>
-                    </div>
-
-                    <p className="experience-summary">
-                      Started my professional development journey working across
-                      web technologies, mobile application tasks and Firebase
-                      integrations.
-                    </p>
-
-                    <ul className="experience-points">
-                      <li>
-                        Customized WordPress websites, plugins and themes.
-                      </li>
-
-                      <li>
-                        Developed a custom WordPress plugin for Firebase Cloud
-                        Messaging integration.
-                      </li>
-
-                      <li>
-                        Contributed to React.js and Next.js development for the
-                        Aqar First project.
-                      </li>
-
-                      <li>
-                        Assisted with React Native application development and
-                        Android publishing activities.
-                      </li>
-                    </ul>
-
-                    <div className="experience-tech">
-                      {[
-                        "WordPress",
-                        "React.js",
-                        "Next.js",
-                        "JavaScript",
-                        "Firebase",
-                        "React Native",
-                      ].map((item) => (
-                        <span key={item}>{item}</span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
               </div>
             </div>
           </section>
@@ -723,97 +484,113 @@ export function PortfolioHome() {
               </div>
               <span className="section-index">PROJECTS</span>
             </div>
+
             <div className="projects-grid">
-              {projects.map((project, i) => (
-                <motion.article
-                  key={project.number}
-                  className={`project-card accent-${project.accent}`}
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.55, delay: i * 0.08 }}
-                  whileHover={{ y: -7 }}
-                >
-                  <div className="project-card-top">
-                    <span>PROJECT / {project.number}</span>
-                    <span className="project-arrow">
-                      <ArrowUpRight size={17} />
-                    </span>
-                  </div>
-                  <div className="project-art">
-                    <div className="art-glow" />
+              {projects.map((project, i) => {
+                const VisualIcon = projectVisuals[project.visualIcon] || Layers;
 
-                    {project.logo ? (
-                      <div className="project-logo-wrapper">
-                        <img
-                          src={project.logo}
-                          alt={`${project.name} logo`}
-                          className="project-logo"
-                        />
-                      </div>
-                    ) : (
-                      <div className="art-window">
-                        <div className="art-window-top">
-                          <i />
-                          <i />
-                          <i />
-                          <span>
-                            {project.name.toLowerCase().replaceAll(" ", "-")}
-                            .app
-                          </span>
-                        </div>
+                const isOffice = project.ownership === "Office Project";
 
-                        <div className="art-window-body">
-                          <div className="art-sidebar">
-                            <i />
-                            <i />
-                            <i />
-                            <i />
-                          </div>
+                return (
+                  <motion.article
+                    key={project.slug}
+                    className={`project-card accent-${project.accent}`}
+                    initial={{ opacity: 0, y: 35 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{
+                      duration: 0.55,
+                      delay: (i % 3) * 0.08,
+                    }}
+                    whileHover={{ y: -8 }}
+                  >
+                    {/* Card Header */}
+                    <div className="project-card-top">
+                      <span>PROJECT / {project.number}</span>
 
-                          <div className="art-main">
-                            <div className="art-line wide" />
-                            <div className="art-line short" />
-
-                            <div className="art-tiles">
-                              <i />
-                              <i />
-                              <i />
-                            </div>
-
-                            <div className="art-line medium" />
-
-                            <div className="art-row">
-                              <i />
-                              <i />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    <span className="art-floating-label">{project.metric}</span>
-                  </div>
-                  <div className="project-info">
-                    <span className="project-category">{project.category}</span>
-                    <h3>{project.name}</h3>
-                    <p>{project.description}</p>
-                    <div className="project-tags">
-                      {project.stack.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
+                      <span className="project-arrow">
+                        <ArrowUpRight size={18} />
+                      </span>
                     </div>
-                    <button
-                      className="project-detail"
-                      onClick={() => setSelectedProject(project)}
-                    >
-                      <span>Explore Project</span>
-                      <ArrowUpRight size={17} />
-                    </button>
-                  </div>
-                </motion.article>
-              ))}
+
+                    {/* Project Artwork */}
+                    <div className="project-art">
+                      <div className="project-art-glow" />
+
+                      <div className="project-art-content">
+                        <div className="project-art-icon">
+                          <VisualIcon size={38} strokeWidth={1.4} />
+                        </div>
+
+                        <div className="project-art-details">
+                          <span>FEATURED WORK</span>
+                          <h3>{project.name}</h3>
+                          <p>{project.category}</p>
+                        </div>
+
+                        <div className="project-art-number">
+                          {project.number}
+                        </div>
+                      </div>
+
+                      <div className="art-floating-label">
+                        <span className="status-dot" />
+                        {project.metric}
+                      </div>
+                    </div>
+
+                    {/* Project Information */}
+                    <div className="project-info">
+                      <div className="project-meta">
+                        <span
+                          className={`project-ownership ${
+                            isOffice
+                              ? "ownership-office"
+                              : "ownership-independent"
+                          }`}
+                        >
+                          {isOffice ? (
+                            <>
+                              <Building2 size={12} />
+                              Office Project
+                            </>
+                          ) : (
+                            <>
+                              <Layers size={12} />
+                              Independent Project
+                            </>
+                          )}
+                        </span>
+
+                        <span className="project-category">
+                          {project.category}
+                        </span>
+                      </div>
+
+                      <h3 className="project-title">{project.name}</h3>
+
+                      <p className="project-description">
+                        {project.description}
+                      </p>
+
+                      {/* Technologies */}
+                      <div className="project-tags">
+                        {project.stack.map((tag) => (
+                          <span key={tag}>{tag}</span>
+                        ))}
+                      </div>
+
+                      {/* Project Navigation */}
+                      <Link href={project.href} className="project-detail">
+                        <span>Explore Project</span>
+                        <ArrowUpRight size={17} />
+                      </Link>
+                    </div>
+                  </motion.article>
+                );
+              })}
             </div>
+
             <p className="project-disclaimer">
               Selected work and project summaries. Detailed case studies,
               screenshots and live links can be added as each project is
@@ -921,50 +698,24 @@ export function PortfolioHome() {
               <div className="contact-spark">
                 <Sparkles size={20} />
               </div>
-
               <span className="section-kicker">
                 04 / HAVE A PROJECT IN MIND?
               </span>
-
               <h2>
                 Let&apos;s make
                 <br />
                 <span className="gradient-text">something great.</span>
               </h2>
-
               <p>
                 I&apos;m open to Flutter Developer opportunities and
                 conversations about building useful digital products.
               </p>
-
-              <div className="contact-actions">
-                <a
-                  className="primary-button contact-button"
-                  href="mailto:mehdiraza019mr@gmail.com"
-                >
-                  <Mail size={17} />
-                  Email Me
-                </a>
-
-                <a
-                  className="secondary-button contact-button"
-                  href="tel:+919702467618"
-                >
-                  <Phone size={17} />
-                  Call Me
-                </a>
-
-                <a
-                  className="whatsapp-button contact-button"
-                  href="https://wa.me/919702467618?text=Hi%20Mehndi%2C%20I%20visited%20your%20portfolio."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle size={17} />
-                  WhatsApp
-                </a>
-              </div>
-
+              <a
+                className="primary-button contact-button"
+                href="mailto:hello@mehindiraza.dev"
+              >
+                Start a conversation <ArrowUpRight size={17} />
+              </a>
               <div className="contact-bottom">
                 <span>MEHNDI RAZA · FLUTTER DEVELOPER</span>
                 <span>INDIA · OPEN TO OPPORTUNITIES</span>
@@ -994,148 +745,37 @@ export function PortfolioHome() {
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              className="project-modal project-case-study"
-              initial={{ opacity: 0, y: 35, scale: 0.96 }}
+              className="project-modal"
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 25, scale: 0.97 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: 20, scale: 0.97 }}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 className="modal-close"
                 onClick={() => setSelectedProject(null)}
-                aria-label="Close project"
+                aria-label="Close"
               >
-                <X size={20} />
+                <X size={19} />
               </button>
-
-              {/* Project heading */}
-              <div className="case-study-heading">
-                <span className="section-kicker">
-                  PROJECT / {selectedProject.number}
-                </span>
-
-                <span className="project-category">
-                  {selectedProject.category}
-                </span>
-
-                <h2>{selectedProject.name}</h2>
-
-                <p>{selectedProject.ownership}</p>
+              <span className="section-kicker">PROJECT OVERVIEW</span>
+              <h3>{selectedProject}</h3>
+              <p>
+                This case study is ready to be expanded with verified
+                screenshots, your exact responsibilities, architecture
+                decisions, technical challenges and a live demo or repository
+                link.
+              </p>
+              <div className="modal-check">
+                <Check size={16} /> Add only details and metrics you can
+                confidently discuss in an interview.
               </div>
-
-              {/* Project screenshots */}
-              {selectedProject.images && selectedProject.images.length > 0 && (
-                <div className="case-study-gallery">
-                  {selectedProject.images?.map((image, index) => (
-                    <div className="case-study-image" key={image}>
-                      <img
-                        src={image}
-                        alt={`${selectedProject.name} screenshot ${index + 1}`}
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Description */}
-              <div className="case-study-section">
-                <span className="case-study-label">ABOUT THE PROJECT</span>
-
-                <p className="case-study-description">
-                  {selectedProject.description}
-                </p>
-              </div>
-
-              {/* Highlights */}
-              <div className="case-study-section">
-                <span className="case-study-label">
-                  KEY FEATURES & HIGHLIGHTS
-                </span>
-
-                <div className="case-study-highlights">
-                  {selectedProject.highlights.map((highlight) => (
-                    <div className="case-study-highlight" key={highlight}>
-                      <span className="highlight-check">
-                        <Check size={14} />
-                      </span>
-                      {highlight}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Technologies */}
-              <div className="case-study-section">
-                <span className="case-study-label">TECHNOLOGIES USED</span>
-
-                <div className="project-tags case-study-tags">
-                  {selectedProject.stack.map((technology) => (
-                    <span key={technology}>{technology}</span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Store links - only show when available */}
-              {(selectedProject.androidUrl || selectedProject.iosUrl) && (
-                <div className="case-study-section">
-                  <span className="case-study-label">
-                    EXPLORE THE APPLICATION
-                  </span>
-
-                  <div className="case-study-store-links">
-                    {selectedProject.androidUrl && (
-                      <a
-                        href={selectedProject.androidUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="store-button"
-                      >
-                        <SiGoogleplay size={23} />
-
-                        <span>
-                          <small>GET IT ON</small>
-                          Google Play
-                        </span>
-
-                        <ExternalLink size={15} />
-                      </a>
-                    )}
-
-                    {selectedProject.iosUrl && (
-                      <a
-                        href={selectedProject.iosUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="store-button"
-                      >
-                        <SiAppstore size={23} />
-
-                        <span>
-                          <small>DOWNLOAD ON</small>
-                          App Store
-                        </span>
-
-                        <ExternalLink size={15} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className="case-study-footer">
-                <span>
-                  <span className="status-dot" /> FEATURED PROJECT
-                </span>
-
-                <button
-                  className="case-study-close"
-                  onClick={() => setSelectedProject(null)}
-                >
-                  Close overview <X size={15} />
-                </button>
-              </div>
+              <button
+                className="primary-button"
+                onClick={() => setSelectedProject(null)}
+              >
+                Back to portfolio <ArrowRight size={16} />
+              </button>
             </motion.div>
           </motion.div>
         )}
